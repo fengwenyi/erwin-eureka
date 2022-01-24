@@ -1,5 +1,6 @@
 #!/bin/bash
-version=1.0.0
+version="$(cat "./build.gradle.kts" | sed "s/=//g" | grep '^version' | awk '{printf $2}' | sed "s/\"//g")"
+echo $version
 gradle clean build -x test
 docker build -t fengwenyi/erwin-eureka:$version .
 docker tag fengwenyi/erwin-eureka:$version fengwenyi/erwin-eureka:$version
